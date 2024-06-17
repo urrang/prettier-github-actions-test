@@ -2,7 +2,8 @@
 	import { onMount } from 'svelte';
 
 	onMount(() => {
-		console.log('Hello world');
+            console.log('Hello world');
+                    console.log('this should fail')
 	});
 </script>
 
