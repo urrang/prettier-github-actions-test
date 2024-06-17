@@ -24,10 +24,10 @@ jobs:
         with:
          fetch-depth: 2
 
-      - name: Get changes
-        run: |
-            CHANGED_FILES=$(git diff --name-only -r HEAD^1 HEAD)
-            echo "CHANGED_FILES=$CHANGED_FILES" >> $GITHUB_ENV
+      # - name: Get changes
+      #   run: |
+      #       CHANGED_FILES=$(git diff --name-only -r HEAD^1 HEAD)
+      #       echo "CHANGED_FILES=$CHANGED_FILES" >> $GITHUB_ENV
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -44,5 +44,8 @@ jobs:
       #     echo "CHANGED_FILES=$CHANGED_FILES" >> $GITHUB_ENV
 
       - name: Run prettier check
-        if: ${{ env.CHANGED_FILES != '' }}
-        run: npm run format:check-files $CHANGED_FILES
+        run: |
+            CHANGED_FILES=$(git diff --name-only -r HEAD^1 HEAD)
+            npm run format:check-files $CHANGED_FILES
+        # if: ${{ env.CHANGED_FILES != '' }}
+        # run: npm run format:check-files $CHANGED_FILES
