@@ -22,7 +22,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-         fetch-depth: 2
+          fetch-depth: 2
 
       # - name: Get changes
       #   run: |
@@ -42,10 +42,9 @@ jobs:
       #   run: |
       #     CHANGED_FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }})
       #     echo "CHANGED_FILES=$CHANGED_FILES" >> $GITHUB_ENV
-
       - name: Run prettier check
         run: |
-            CHANGED_FILES=$(git diff --name-only -r HEAD^1 HEAD)
-            npm run format:check-files $CHANGED_FILES
+          CHANGED_FILES=$(git diff --name-only -r HEAD^1 HEAD)
+          npm run format:check-files $CHANGED_FILES
         # if: ${{ env.CHANGED_FILES != '' }}
         # run: npm run format:check-files $CHANGED_FILES
