@@ -30,5 +30,12 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Get list of changed files
+        id: changed-files
+        run: |
+          CHANGED_FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }})
+          echo "CHANGED_FILES=$CHANGED_FILES" >> $GITHUB_ENV
+
       - name: Run prettier check
-        run: npm run format:check
+        if: ${{ env.CHANGED_FILES != '' }}
+        run: npm run format:check-files $CHANGED_FILES
