@@ -3,7 +3,6 @@
 
 	onMount(() => {
 		console.log('Hello world');
-            console.log('this should fail formatting checks');
 	});
 </script>
 
