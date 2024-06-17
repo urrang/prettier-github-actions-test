@@ -3,6 +3,7 @@
 
 	onMount(() => {
 		console.log('Hello world');
+            const fails = 'this should fail checks'
 	});
 </script>
 
