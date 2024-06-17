@@ -1,6 +1,6 @@
 name: Code formatting check
 on:
-  pull-request:
+  pull_request:
     branches: 
       - main
       - master
