@@ -1,0 +1,35 @@
+name: Code formatting check
+on:
+  pull-request:
+    branches: 
+      - main
+      - master
+      - pilot
+      - develop
+      - RC
+      - RC-[0-9]+
+      - rc-[0-9]+
+
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  check-formatting:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Check formatting
+        run: npm run format:check
+
