@@ -22,12 +22,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
+          # For PRs the action/checkout step creates a detached head which is simulating a merge of the PR into the target branch.
+          # Using "fetch-depth: 2" here allows us to do a git diff between the last two commits,
+          # and only run formatting cheks on the files that changed (see the "Run prettier check" step)
+          # https://stackoverflow.com/a/74268200
           fetch-depth: 2
-
-      # - name: Get changes
-      #   run: |
-      #       CHANGED_FILES=$(git diff --name-only -r HEAD^1 HEAD)
-      #       echo "CHANGED_FILES=$CHANGED_FILES" >> $GITHUB_ENV
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -37,14 +36,7 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # - name: Get list of changed files
-      #   id: changed-files
-      #   run: |
-      #     CHANGED_FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }})
-      #     echo "CHANGED_FILES=$CHANGED_FILES" >> $GITHUB_ENV
       - name: Run prettier check
         run: |
           CHANGED_FILES=$(git diff --name-only -r HEAD^1 HEAD)
           npm run format:check-files $CHANGED_FILES
-        # if: ${{ env.CHANGED_FILES != '' }}
-        # run: npm run format:check-files $CHANGED_FILES
